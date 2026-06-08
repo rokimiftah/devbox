@@ -1,21 +1,28 @@
 name: Build Convex Backend
 
 on:
-  workflow_dispatch: # Mengizinkan Anda memicu proses build secara manual lewat tombol di GitHub
+  workflow_dispatch:
 
 jobs:
   build:
     name: Compile Rust Binary
-    runs-on: ubuntu-latest # Menggunakan server gratis dari GitHub (2 vCPU, 7GB RAM)
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Mengganti installer Nix menggunakan aksi resmi NixOS yang lebih stabil
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      # Konfigurasi Devbox (tanpa harus bergantung pada installer Nix bawaan)
       - name: Install Devbox
         uses: jetify-com/devbox-install-action@v0.11.0
         with:
-          enable-cache: true # Mempercepat build selanjutnya
+          enable-cache: true
 
       - name: Download Convex Source Code
         run: devbox run setup
@@ -27,6 +34,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: convex-local-backend-linux
-          # Path tempat file hasil kompilasi berada
           path: .convex-local/target/release/convex-local-backend
           retention-days: 7
