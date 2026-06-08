@@ -6,12 +6,13 @@
     "pkg-config@latest",
     "git@latest",
     "gnumake@latest",
-    "clang"
+    "clang",
+    "libclang"
   ],
   "shell": {
     "init_hook": [
       "rustup default stable",
-      "export LIBCLANG_PATH=$(pkg-config --variable=libdir clang)",
+      "export LIBCLANG_PATH=$(find /nix/store -name \"libclang.so\" 2>/dev/null | head -n 1 | xargs dirname)",
       "echo '🚀 Devbox: Siap untuk kompilasi!'"
     ],
     "scripts": {
