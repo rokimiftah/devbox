@@ -16,7 +16,7 @@
     "init_hook": [
       "rustup default stable",
       "export LIBCLANG_PATH=$(find /nix/store -name \"libclang.so\" 2>/dev/null | head -n 1 | xargs dirname)",
-      "export CFLAGS=\"-w\"",
+      "export CFLAGS=\"-w -include stdint.h\"",
       "export CXXFLAGS=\"-w -include stdint.h\"",
       "mkdir -p $HOME/.local/bin",
       "echo '#!/bin/sh' > $HOME/.local/bin/rush",
