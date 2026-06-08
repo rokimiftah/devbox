@@ -1,0 +1,32 @@
+name: Build Convex Backend
+
+on:
+  workflow_dispatch: # Mengizinkan Anda memicu proses build secara manual lewat tombol di GitHub
+
+jobs:
+  build:
+    name: Compile Rust Binary
+    runs-on: ubuntu-latest # Menggunakan server gratis dari GitHub (2 vCPU, 7GB RAM)
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Devbox
+        uses: jetify-com/devbox-install-action@v0.11.0
+        with:
+          enable-cache: true # Mempercepat build selanjutnya
+
+      - name: Download Convex Source Code
+        run: devbox run setup
+
+      - name: Build Release Binary
+        run: devbox run build:release
+
+      - name: Upload Binary Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: convex-local-backend-linux
+          # Path tempat file hasil kompilasi berada
+          path: .convex-local/target/release/convex-local-backend
+          retention-days: 7
