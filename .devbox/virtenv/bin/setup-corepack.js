@@ -1,1 +1,0 @@
-/root/devbox/.devbox/virtenv/nodejs/bin/setup-corepack.js
