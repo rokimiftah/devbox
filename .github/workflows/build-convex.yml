@@ -12,26 +12,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Menggunakan installer Nix dari Cachix yang terbukti stabil
+      # 1. Install Nix menggunakan aksi Cachix yang stabil di Github Actions
       - name: Install Nix
         uses: cachix/install-nix-action@v27
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
-      # Menginstal Devbox secara langsung (Bypass Github Action error)
-      - name: Install Devbox (Manual)
-        run: curl -fsSL https://get.jetpack.io/devbox | bash
+      # 2. Unduh dan eksekusi skrip resmi Jetify dengan flag -f (Force)
+      - name: Install Devbox (Headless)
+        run: |
+          curl -fsSL https://get.jetify.com/devbox -o install-devbox.sh
+          chmod +x install-devbox.sh
+          sudo ./install-devbox.sh -f
 
-      # Menambahkan Devbox ke dalam PATH agar bisa dipanggil di step selanjutnya
+      # 3. Daftarkan Devbox ke GITHUB_PATH agar bisa dipakai di step selanjutnya
       - name: Setup Devbox Path
         run: echo "/usr/local/bin" >> $GITHUB_PATH
 
+      # 4. Unduh source code Convex
       - name: Download Convex Source Code
         run: devbox run setup
 
+      # 5. Kompilasi binary Rust (proses ini memakan waktu paling lama)
       - name: Build Release Binary
         run: devbox run build:release
 
+      # 6. Unggah hasil kompilasi agar bisa diunduh ke VPS
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
         with:
