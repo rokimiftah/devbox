@@ -11,18 +11,13 @@
     "llvmPackages.libclang@latest",
     "llvmPackages.libcxx@latest"
   ],
-  "env": {
-    "LIBCLANG_PATH": "${DEVBOX_PACKAGES_DIR}/lib",
-    "LD_LIBRARY_PATH": "${DEVBOX_PACKAGES_DIR}/lib",
-    "BINDGEN_EXTRA_CLANG_ARGS": "-I${DEVBOX_PACKAGES_DIR}/include"
-  },
   "shell": {
     "init_hook": ["rustup default stable", "echo '🚀 Devbox: Lingkungan Kompilasi Convex (dengan C++ Bindgen) siap!'"],
     "scripts": {
       "setup": "git clone https://github.com/get-convex/convex-backend.git .convex-local",
       "start": "cd .convex-local && cargo run --bin convex-local-backend",
       "start:release": "cd .convex-local && cargo run --release --bin convex-local-backend",
-      "build:release": "cd .convex-local && cargo build --release --jobs 2 --bin convex-local-backend"
+      "build:release": "export LIBCLANG_PATH=\"$DEVBOX_PROJECT_ROOT/.devbox/nix/profile/default/lib\" && export LD_LIBRARY_PATH=\"$DEVBOX_PROJECT_ROOT/.devbox/nix/profile/default/lib\" && export BINDGEN_EXTRA_CLANG_ARGS=\"-I$DEVBOX_PROJECT_ROOT/.devbox/nix/profile/default/include\" && cd .convex-local && cargo build --release --jobs 2 --bin convex-local-backend"
     }
   }
 }
