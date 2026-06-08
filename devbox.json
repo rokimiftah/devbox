@@ -7,13 +7,14 @@
     "git@latest",
     "gcc@latest",
     "gnumake@latest",
-    "stdenv.cc.cc.lib@latest",
     "clang@latest",
-    "llvmPackages_18.libclang@latest"
+    "llvmPackages.libclang@latest",
+    "llvmPackages.libcxx@latest"
   ],
   "env": {
+    "LIBCLANG_PATH": "${DEVBOX_PACKAGES_DIR}/lib",
     "LD_LIBRARY_PATH": "${DEVBOX_PACKAGES_DIR}/lib",
-    "LIBCLANG_PATH": "${DEVBOX_PACKAGES_DIR}/lib"
+    "BINDGEN_EXTRA_CLANG_ARGS": "-I${DEVBOX_PACKAGES_DIR}/include"
   },
   "shell": {
     "init_hook": ["rustup default stable", "echo '🚀 Devbox: Lingkungan Kompilasi Convex (dengan C++ Bindgen) siap!'"],
