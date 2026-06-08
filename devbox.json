@@ -6,10 +6,17 @@
     "pkg-config@latest",
     "git@latest",
     "gcc@latest",
-    "gnumake@latest"
+    "gnumake@latest",
+    "stdenv.cc.cc.lib@latest",
+    "clang@latest",
+    "llvmPackages_18.libclang@latest"
   ],
+  "env": {
+    "LD_LIBRARY_PATH": "${DEVBOX_PACKAGES_DIR}/lib",
+    "LIBCLANG_PATH": "${DEVBOX_PACKAGES_DIR}/lib"
+  },
   "shell": {
-    "init_hook": ["rustup default stable", "echo '🚀 Devbox: Convex Backend siap dikompilasi!'"],
+    "init_hook": ["rustup default stable", "echo '🚀 Devbox: Lingkungan Kompilasi Convex (dengan C++ Bindgen) siap!'"],
     "scripts": {
       "setup": "git clone https://github.com/get-convex/convex-backend.git .convex-local",
       "start": "cd .convex-local && cargo run --bin convex-local-backend",
