@@ -1,27 +1,7 @@
 {
-  "packages": [
-    "rustup@latest",
-    "protobuf@latest",
-    "openssl@latest",
-    "pkg-config@latest",
-    "git@latest",
-    "gcc@latest",
-    "gnumake@latest",
-    "llvmPackages_18.libclang@latest",
-    "llvmPackages_18.libcxx@latest"
-  ],
-  "env": {
-    "LIBCLANG_PATH": "${DEVBOX_PACKAGES_DIR}/lib",
-    "BINDGEN_EXTRA_CLANG_ARGS": "-isystem ${DEVBOX_PACKAGES_DIR}/include/c++/v1"
-  },
+  "packages": ["rustup@latest", "protobuf@latest", "openssl@latest", "pkg-config@latest", "git@latest", "gnumake@latest"],
   "shell": {
-    "init_hook": [
-      "rustup default stable",
-      "export LD_LIBRARY_PATH=\"${DEVBOX_PACKAGES_DIR}/lib:$LD_LIBRARY_PATH\"",
-      "export CFLAGS=\"-I${DEVBOX_PACKAGES_DIR}/include\"",
-      "export CXXFLAGS=\"-I${DEVBOX_PACKAGES_DIR}/include/c++/v1\"",
-      "echo '🚀 Devbox: Lingkungan Kompilasi Convex (dengan C++ Bindgen) siap!'"
-    ],
+    "init_hook": ["rustup default stable", "echo '🚀 Devbox: Siap untuk kompilasi!'"],
     "scripts": {
       "setup": "git clone https://github.com/get-convex/convex-backend.git .convex-local",
       "start": "cd .convex-local && cargo run --bin convex-local-backend",
