@@ -1,12 +1,20 @@
 {
-  "packages": ["rustup@latest", "protobuf@latest", "openssl@latest", "pkg-config@latest", "git@latest"],
+  "packages": [
+    "rustup@latest",
+    "protobuf@latest",
+    "openssl@latest",
+    "pkg-config@latest",
+    "git@latest",
+    "gcc@latest",
+    "gnumake@latest"
+  ],
   "shell": {
-    "init_hook": ["rustup default stable", "echo '🚀 Devbox: Convex Backend & Dashboard siap digunakan!'"],
+    "init_hook": ["rustup default stable", "echo '🚀 Devbox: Convex Backend siap dikompilasi!'"],
     "scripts": {
       "setup": "git clone https://github.com/get-convex/convex-backend.git .convex-local",
       "start": "cd .convex-local && cargo run --bin convex-local-backend",
       "start:release": "cd .convex-local && cargo run --release --bin convex-local-backend",
-      "build:release": "cd .convex-local && cargo build --release --bin convex-local-backend"
+      "build:release": "cd .convex-local && cargo build --release --jobs 2 --bin convex-local-backend"
     }
   }
 }
