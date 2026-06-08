@@ -16,10 +16,8 @@
     "init_hook": [
       "rustup default stable",
       "export LIBCLANG_PATH=$(find /nix/store -name \"libclang.so\" 2>/dev/null | head -n 1 | xargs dirname)",
-      "export CFLAGS=\"-w -include cstdint\"",
-      "export CXXFLAGS=\"-w -include cstdint\"",
-      "git config --global user.name \"CI\" || true",
-      "git config --global user.email \"ci@example.com\" || true",
+      "export CFLAGS=\"-w\"",
+      "export CXXFLAGS=\"-w -include stdint.h\"",
       "mkdir -p $HOME/.local/bin",
       "echo '#!/bin/sh' > $HOME/.local/bin/rush",
       "echo 'npx --yes @microsoft/rush \"$@\"' >> $HOME/.local/bin/rush",
