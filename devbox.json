@@ -8,7 +8,8 @@
     "gnumake@latest",
     "clang",
     "libclang",
-    "nodejs@22",
+    "nodejs@20",
+    "python3",
     "just"
   ],
   "shell": {
@@ -17,6 +18,11 @@
       "export LIBCLANG_PATH=$(find /nix/store -name \"libclang.so\" 2>/dev/null | head -n 1 | xargs dirname)",
       "export CFLAGS=\"-w\"",
       "export CXXFLAGS=\"-w -include cstdint\"",
+      "mkdir -p $HOME/.local/bin",
+      "echo '#!/bin/sh' > $HOME/.local/bin/rush",
+      "echo 'npx --yes @microsoft/rush \"$@\"' >> $HOME/.local/bin/rush",
+      "chmod +x $HOME/.local/bin/rush",
+      "export PATH=$HOME/.local/bin:$PATH",
       "echo '🚀 Devbox: Siap untuk kompilasi!'"
     ],
     "scripts": {
