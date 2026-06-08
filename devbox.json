@@ -6,9 +6,8 @@
     "pkg-config@latest",
     "git@latest",
     "gnumake@latest",
-    "clang",
     "libclang",
-    "nodejs@20",
+    "nodejs@22",
     "python3",
     "just"
   ],
@@ -26,8 +25,8 @@
       "echo '🚀 Devbox: Siap untuk kompilasi!'"
     ],
     "scripts": {
-      "setup": "git clone https://github.com/get-convex/convex-backend.git .convex-local",
-      "start": "cd .convex-local && cargo run --bin convex-local-backend",
+      "setup":         "git clone https://github.com/get-convex/convex-backend.git .convex-local",
+      "start":         "cd .convex-local && cargo run --bin convex-local-backend",
       "start:release": "cd .convex-local && cargo run --release --bin convex-local-backend",
       "build:release": "cd .convex-local && cargo build --release --jobs 2 --bin convex-local-backend"
     }
