@@ -6,7 +6,7 @@
     "pkg-config@latest",
     "git@latest",
     "gnumake@latest",
-    "libclang"
+    "clang"
   ],
   "shell": {
     "init_hook": [
