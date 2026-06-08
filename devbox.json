@@ -1,7 +1,19 @@
 {
-  "packages": ["rustup@latest", "protobuf@latest", "openssl@latest", "pkg-config@latest", "git@latest", "gnumake@latest"],
+  "packages": [
+    "rustup@latest",
+    "protobuf@latest",
+    "openssl@latest",
+    "pkg-config@latest",
+    "git@latest",
+    "gnumake@latest",
+    "libclang"
+  ],
   "shell": {
-    "init_hook": ["rustup default stable", "echo '🚀 Devbox: Siap untuk kompilasi!'"],
+    "init_hook": [
+      "rustup default stable",
+      "export LIBCLANG_PATH=$(pkg-config --variable=libdir clang)",
+      "echo '🚀 Devbox: Siap untuk kompilasi!'"
+    ],
     "scripts": {
       "setup": "git clone https://github.com/get-convex/convex-backend.git .convex-local",
       "start": "cd .convex-local && cargo run --bin convex-local-backend",

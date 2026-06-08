@@ -12,20 +12,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 1. Pastikan Clang terpasang di Ubuntu dan temukan lokasinya
-      - name: Install System Clang (for Bindgen)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y clang libclang-dev llvm
-          echo "LIBCLANG_PATH=$(llvm-config --libdir)" >> $GITHUB_ENV
-
-      # 2. Install Nix
+      # Install Nix
       - name: Install Nix
         uses: cachix/install-nix-action@v27
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
-      # 3. Install Devbox
+      # Install Devbox
       - name: Install Devbox (Headless)
         run: |
           curl -fsSL https://get.jetify.com/devbox -o install-devbox.sh
@@ -34,19 +27,18 @@ jobs:
           sudo chown runner /usr/local/bin/devbox
           sudo chmod 755 /usr/local/bin/devbox
 
-      # 4. Daftarkan Devbox Path
       - name: Setup Devbox Path
         run: echo "/usr/local/bin" >> $GITHUB_PATH
 
-      # 5. Unduh Convex
+      # Clone sumber Convex
       - name: Download Convex Source Code
         run: devbox run setup
 
-      # 6. Kompilasi (Sekarang LIBCLANG_PATH akan dibaca otomatis oleh Cargo)
+      # Build (LIBCLANG_PATH otomatis dari init_hook)
       - name: Build Release Binary
         run: devbox run build:release
 
-      # 7. Upload Artifact
+      # Upload artifact
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
         with:
