@@ -12,17 +12,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Mengganti installer Nix menggunakan aksi resmi NixOS yang lebih stabil
+      # Menggunakan installer Nix dari Cachix yang terbukti stabil
       - name: Install Nix
         uses: cachix/install-nix-action@v27
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
-      # Konfigurasi Devbox (tanpa harus bergantung pada installer Nix bawaan)
-      - name: Install Devbox
-        uses: jetify-com/devbox-install-action@v0.11.0
-        with:
-          enable-cache: true
+      # Menginstal Devbox secara langsung (Bypass Github Action error)
+      - name: Install Devbox (Manual)
+        run: curl -fsSL https://get.jetpack.io/devbox | bash
+
+      # Menambahkan Devbox ke dalam PATH agar bisa dipanggil di step selanjutnya
+      - name: Setup Devbox Path
+        run: echo "/usr/local/bin" >> $GITHUB_PATH
 
       - name: Download Convex Source Code
         run: devbox run setup
