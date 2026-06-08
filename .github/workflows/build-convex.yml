@@ -16,8 +16,7 @@ jobs:
       - name: Install System Clang (for Bindgen)
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang libclang-dev
-          # Menemukan path libclang dan mengekspornya untuk semua step selanjutnya
+          sudo apt-get install -y clang libclang-dev llvm
           echo "LIBCLANG_PATH=$(llvm-config --libdir)" >> $GITHUB_ENV
 
       # 2. Install Nix
